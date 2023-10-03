@@ -1,0 +1,116 @@
+Cho biết sự khác nhau giữa @PathVariable và @RequestParam trong SpringMVC?
+
+@PathVariable: cần truyền một cái tên từ phía client thông qua request, thông số đơn trên đường dẫn được truyền là path param, với đường dẫn có thể thực hiện get hoặc post. Path Variable phải có một value là giá trị tương ứng nằm trên đường dẫn của RequestMapping và có một kiểu dữ liệu kèm một biến tương ứng với nó để trả kết quả về.
+
+Exam: 
+
+@RequestMapping(“/hello/{name}”)
+
+public String hello(Model model, @PathVariable(value = "name") String name)
+
+{…}
+
+- Thông số dữ liệu truyền vào được truyền trực tiếp trên param, nằm trên path, ảnh hưởng trực tiếp đến URL, tức là việc Mapping URL phụ thuộc vào value được khai báo. 
+
+Exam: 
+
+http://localhost:8888/Demo/hello/chang
+
+- Đảm bảo truyền mọi kiểu dữ liệu kể cả khoảng trắng vẫn có thể đọc được thông tin.
+
+Exam: 
+
+http://localhost:8888/Demo/hello/chang thien
+
+
+
+@RequestParam:  Thông thường các phương thức request lên server dạng get thì sẽ truyền tham số dạng RequestParam.
+
+- Dữ liệu được truyền vào nằm sau thông số được truyền trên path, có thể truyền vào nhiều tham số trên đường dẫn, không ảnh hưởng đến URL của 
+
+RequestMapping nên không cần khai báo, chỉ truyền tham số vào và có đường truyền trên param.
+
+Exam: 
+
+http://localhost:8888/Demo/?first_name=Thien&last_name=Trang
+
+- RequestParam có thể tùy chọn: Mặc định khi sử dụng RequestParam bắt buộc phải truyền tham số lên nếu khai báo, nhưng người quản trị có thể tắt cờ bắt buộc dữ liệu truyền vào bằng lệnh required = false
+
+- Không truyền dữ liệu vào thì path vẫn có thể chạy bình thường và lấy mặc định xử lý phương thức ban đầu hoặc lấy giá trị mặc định theo khai báo default value = “A” - đảm bảo action vẫn được gọi nếu không truyền dữ liệu lên path. 
+
+Exam: 
+
+public String index(Model model, 
+
+                              @RequestParam(value=”first_name”, required = false, default value = “A”) String firstName,
+
+                              @RequestParam(value=”last_name”, required = false, default value = “B”) String lastName)
+
+{...}
+
+============================================================================================
+
+Cho biết sự khác nhau các annotation @Controller, @Component, @Repository, và @Service?
+
+
+@Component để đánh dấu một class được tạo ra với mục đích định nghĩa các bean.
+@Controller chỉ ra rằng một lớp cụ thể phục vụ vai trò của bộ điều khiển.
+@Service để chỉ ra rằng nó thuộc về tầng service nắm giữ code xử lý business.
+@Repository được sử dụng để chỉ ra rằng lớp cung cấp cơ chế cho hoạt động lưu trữ, truy xuất, tìm kiếm, cập nhật và xóa trên các đối tượng .
+
+------------------------------------------
+
+@Component:
+• Sử dụng @Component để đánh dấu một class được tạo ra với mục đích là để định nghĩa các bean được quản lý bởi Spring IoC container.
+• Spring chỉ tìm kiếm và chọn ra những class được đánh dấu với @Component annotation để khởi tạo và đăng ký với ApplicationContext.
+• Spring sẽ không tìm kiếm các class được đánh dấu là @Service và @Repository.
+@Repository:
+• @Repository là một trường hợp đặc biệt của @Component tức là annotation này đã được đánh dấu với @Component. Do đó một class được đánh dấu @Repository sẽ được khởi tạo và đăng ký với ApplicationContext.
+• @Repository dùng để chuyển đổi các database exception sang Spring-based.
+@Service:
+• @Service được dùng để đánh dấu một class với @Service annotation để chỉ ra rằng nó thuộc về tầng service nào.
+@Controller
+• @Controller dùng để khai báo Class đó là một controller và có nhiệm vụ mapping request trên url vào các method tương ứng trong controller.
+
+------------------------------------------
+
+@Component: đánh dấu 1 lớp dùng khuôn mẫu chung cho bất kỳ phần tử nào của spring quản lý.
+Mỗi annotation còn lại là 1 dạng @Component đặc biệt vì chúng đều được đánh dấu với @Component, mục đích là điểm khác biệt giữa chúng.
+@Service: 
+- là 1 khuôn mẫu cho tầng service.
+- đánh dấu 1 lớp nắm giữ logic nghiệp vụ trong tầng service.
+@Repository: 
+- là 1 khuôn mẫu cho tầng persitence
+- được dùng trong tầng truy cập dữ liệu (DAl).
+@Controller: 
+- là 1 khuôn mẫu cho tầng presentation (spring-mvc)
+- được dùng trong spring-mvc để định nghĩa controller.
+
+============================================================================================
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
